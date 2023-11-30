@@ -1,7 +1,4 @@
 ﻿using ConsoleUtils;
-using System.Data;
-using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Cakes
 {
@@ -11,7 +8,7 @@ namespace Cakes
         static void Main(string[] args)
         {
             Start();
-        }
+        }   
         static void Start()
         {
             string[] modes = { "1 - Выбор торта", "2 - Внести в прайс новый торт" };
@@ -28,7 +25,6 @@ namespace Cakes
                     break;
             }
         }
-
 
         static void FindCake()
         {

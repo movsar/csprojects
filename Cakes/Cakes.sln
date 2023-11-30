@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cakes", "Cakes.csproj", "{1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUtils", "..\..\Libraries\ConsoleUtils\ConsoleUtils.csproj", "{1517EF5C-3537-425A-9976-59C7518043BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zoo", "..\Zoo\Zoo.csproj", "{0EFD0C65-C039-4164-B66D-3D5CF9B060F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1517EF5C-3537-425A-9976-59C7518043BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1517EF5C-3537-425A-9976-59C7518043BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1517EF5C-3537-425A-9976-59C7518043BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EFD0C65-C039-4164-B66D-3D5CF9B060F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EFD0C65-C039-4164-B66D-3D5CF9B060F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EFD0C65-C039-4164-B66D-3D5CF9B060F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EFD0C65-C039-4164-B66D-3D5CF9B060F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
