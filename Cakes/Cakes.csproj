@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\ConsoleUtils\ConsoleUtils.csproj" />
+    <ProjectReference Include="..\ConsoleUtils\ConsoleUtils.csproj" />
   </ItemGroup>
 
 </Project>
