@@ -4,13 +4,24 @@
     {
         static void Main(string[] args)
         {
-            Animal Lion = new Lion("lion");
-            Lion.Age = 4;
-            Lion.GiveSound();
+            var lionSymba = new Lion("Symba");
+            var lionGeorge = new Lion("George");
+            var lionShram = new Lion("Shram");
+            var elephantSveta = new Elephant("Sveta");
 
-            //Elephant Elephant = new Elephant("elephant");
-            //Elephant.Age = 6;
-            
+            var lion3 = new Lion();
+            lion3.Move();
+        }
+
+        private static void MoveAnimal(Animal animal)
+        {
+            animal.Move();
+
+            if (typeof(Lion) == animal.GetType())
+            {
+                Lion lion = (Lion)animal;
+                lion.Roar();
+            }
         }
     }
 }

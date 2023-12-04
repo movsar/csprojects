@@ -13,7 +13,7 @@ namespace Cakes
         {
             string[] modes = { "1 - Выбор торта", "2 - Внести в прайс новый торт" };
             int? mode = InputService.SelectMode(modes);
-
+                
             switch (mode)
             {
                 case 1:

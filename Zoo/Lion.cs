@@ -12,13 +12,20 @@ namespace Zoo
         {
             Console.WriteLine("1ааакъ");
         }
-        public Lion(string name) : base(name)
+        public override void Move()
         {
-
+            Console.WriteLine($"Lion {Name} moved");
         }
+
         public override void GiveSound()
         {
             Console.WriteLine("LionSound");
+        }
+
+        public Lion(string name) : base(name) { }
+        public Lion()
+        {
+
         }
     }
 }
