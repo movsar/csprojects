@@ -17,7 +17,7 @@ namespace Zoo
             Console.WriteLine($"Lion {Name} moved");
         }
 
-        public override void GiveSound()
+        public override void MakeSound()
         {
             Console.WriteLine("LionSound");
         }

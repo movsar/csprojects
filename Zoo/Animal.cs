@@ -19,7 +19,7 @@
         {
             Console.WriteLine("Спатья");
         }
-        public virtual void GiveSound()
+        public virtual void MakeSound()
         {
             Console.WriteLine("Гав бав");
         }
