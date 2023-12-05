@@ -2,24 +2,17 @@
 {
     internal abstract class Animal
     {
+        #region Properties, Fields and Constructors
         public string Name { get; private set; }
         public decimal Age { get; set; } = 0;
-
+        public abstract void Move();
         public Animal(string name)
         {
             Name = name;
         }
-
-        public Animal()
-        {
-
-        }
-
-        public abstract void Move();
-
+        #endregion
         public void Eat()
         {
-            Name = "asd";
             Console.WriteLine("Ням-ням");
         }
         public void Sleep()
@@ -28,7 +21,7 @@
         }
         public virtual void GiveSound()
         {
-            Console.WriteLine("AnimalSound");
+            Console.WriteLine("Гав бав");
         }
     }
 }
