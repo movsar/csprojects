@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zoo
+namespace Zoo.Models
 {
     internal class Elephant : Animal
     {
-        public Elephant(string name) : base(name) {}
+        public Elephant(string name) : base(name) { }
 
         public override void Move()
         {

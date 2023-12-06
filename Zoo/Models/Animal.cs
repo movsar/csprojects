@@ -1,4 +1,4 @@
-﻿namespace Zoo
+﻿namespace Zoo.Models
 {
     internal abstract class Animal
     {
