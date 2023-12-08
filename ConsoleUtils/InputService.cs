@@ -19,7 +19,7 @@
             return result;
         }
 
-        public static int? SelectMode(string[] modeDescriptions)
+        public static int? GetOption(string[] modeDescriptions)
         {
             Console.WriteLine("Выберите режим: ");
 
@@ -36,7 +36,7 @@
                 if (mode < 0 || mode > modeDescriptions.Length)
                 {
                     // Если ошибка, запускаем текущий метод, заново
-                    return SelectMode(modeDescriptions);
+                    return GetOption(modeDescriptions);
                 }
 
                 // Если код дошел сюда, возвращаем значение выбранного режима
@@ -45,7 +45,7 @@
             catch (Exception)
             {
                 // Если ошибка, запускаем текущий метод, заново
-                return SelectMode(modeDescriptions);
+                return GetOption(modeDescriptions);
             }
         }
 
@@ -72,6 +72,7 @@
             }
             return date;
         }
+
         public static string? GetString()
         {
             return Console.ReadLine();

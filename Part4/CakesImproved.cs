@@ -1,8 +1,13 @@
 ﻿using ConsoleUtils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace movsar_part4
 {
-    internal class CakesImproved
+    internal class CakesImprovement
     {
         public static void Start()
         {
@@ -10,7 +15,7 @@ namespace movsar_part4
 
             // Выбор режима
             string[] modes = { "1 - Выбор торта", "2 - Внести в прайс новый торт" };
-            int? mode = InputService.SelectMode(modes);
+            int? mode = InputService.GetOption(modes);
 
             switch (mode)
             {
