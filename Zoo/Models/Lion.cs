@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zoo
+namespace Zoo.Models
 {
     internal class Lion : Animal
     {
@@ -23,9 +23,5 @@ namespace Zoo
         }
 
         public Lion(string name) : base(name) { }
-        public Lion()
-        {
-
-        }
     }
 }

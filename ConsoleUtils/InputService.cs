@@ -1,7 +1,24 @@
 ﻿namespace ConsoleUtils
 {
-    public class InputService
+    public static class InputService
     {
+        public static double? GetDouble()
+        {
+            // Создается пустая переменная для результата
+            double result;
+            
+            // Берем ввод пользователя и сохраняем как строку в input
+            string? input = Console.ReadLine();
+
+            bool parsingResult = double.TryParse(input, out result);
+            if (!parsingResult)
+            {
+                Console.WriteLine("Неверный ввод");
+            }
+
+            return result;
+        }
+
         public static int? SelectMode(string[] modeDescriptions)
         {
             Console.WriteLine("Выберите режим: ");
