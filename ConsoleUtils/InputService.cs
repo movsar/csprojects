@@ -60,5 +60,21 @@
             }
             return result;
         }
+
+        public static DateTime? GetDate()
+        {
+            string? rawDate = Console.ReadLine();
+            DateTime date;
+            bool dateGood = DateTime.TryParse(rawDate, out date);
+            if (!dateGood)
+            {
+                Console.WriteLine("Ошибка ввода");
+            }
+            return date;
+        }
+        public static string? GetString()
+        {
+            return Console.ReadLine();
+        }
     }
 }
