@@ -72,10 +72,5 @@
             }
             return date;
         }
-
-        public static string? GetString()
-        {
-            return Console.ReadLine();
-        }
     }
 }
