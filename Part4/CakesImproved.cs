@@ -1,13 +1,8 @@
 ﻿using ConsoleUtils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace movsar_part4
 {
-    internal class CakesImprovement
+    internal class CakesImproved
     {
         public static void Start()
         {
