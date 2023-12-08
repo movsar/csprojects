@@ -1,12 +1,12 @@
 ﻿namespace ConsoleUtils
 {
-    public static class InputService
+    public class InputService
     {
         public static double? GetDouble()
         {
             // Создается пустая переменная для результата
             double result;
-            
+
             // Берем ввод пользователя и сохраняем как строку в input
             string? input = Console.ReadLine();
 
@@ -47,6 +47,18 @@
                 // Если ошибка, запускаем текущий метод, заново
                 return SelectMode(modeDescriptions);
             }
+        }
+
+        public static int? GetInt()
+        {
+            int result;
+            string? input = Console.ReadLine();
+            bool parsResult = int.TryParse(input, out result);
+            if (!parsResult)
+            {
+                Console.WriteLine("Ошибка ввода");
+            }
+            return result;
         }
     }
 }
