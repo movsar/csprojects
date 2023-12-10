@@ -1,7 +1,9 @@
 ﻿namespace Employees.Models
 {
-    internal class Employee
+    public class Employee
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        
         public string Name { get;}
         public JobTitles JobTitle { get; set; }
         public Department Department { get; set; }

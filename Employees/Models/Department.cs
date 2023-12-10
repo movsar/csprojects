@@ -1,12 +1,14 @@
 ﻿namespace Employees.Models
 {
-    internal class Department
+    public class Department
     {
-        public string Name { get;}
+        public Guid Id { get; set; } = Guid.NewGuid();
 
+        public string Name { get; private set; }
         public Department(string name)
         {
             Name = name;
         }
+        
     }
 }

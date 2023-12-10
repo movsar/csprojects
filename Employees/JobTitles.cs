@@ -1,6 +1,6 @@
 ﻿namespace Employees
 {
-    internal enum JobTitles
+    public enum JobTitles
     {
        Intern,
        Director,
