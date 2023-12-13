@@ -10,12 +10,13 @@ namespace CakesAdvanced.Models
     {
         public string Name {  get; }
         public decimal Price { get; }
-        public List<string> Ingredients { get; } = new List<string>();
+
+        public List<string> _ingredients { get; } = new List<string>();
 
         public Cake(string name, List<string> ingredients)
         {
             Name = name;
-            Ingredients = ingredients;
+            _ingredients = ingredients; 
         }
 
     }

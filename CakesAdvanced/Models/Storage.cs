@@ -8,5 +8,6 @@ namespace CakesAdvanced.Models
 {
     internal class Storage
     {
+        public List<string> _allingredients { get; } = new List<string>();
     }
 }
