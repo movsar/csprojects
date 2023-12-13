@@ -8,6 +8,6 @@ namespace CakesAdvanced.Models
 {
     internal class Storage
     {
-        public List<string> _allIngredients;
+        private List<Ingredient> _allIngredients;
     }
 }

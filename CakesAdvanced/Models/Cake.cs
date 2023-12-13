@@ -10,9 +10,9 @@ namespace CakesAdvanced.Models
     {
       public string Name {  get; set; }
       public decimal Price {  get; set; }
-      public List<string> _ingredients { get; }=new List<string>();
+      public List<Ingredient> _ingredients { get; }=new List<Ingredient>();
 
-        public Cake(string name, List<string> ingredients) 
+        public Cake(string name, List<Ingredient> ingredients) 
         {
             Name = name;
             _ingredients = ingredients;

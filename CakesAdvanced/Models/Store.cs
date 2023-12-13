@@ -9,7 +9,7 @@ namespace CakesAdvanced.Models
     internal class Store
     {
         public string Name { get; }
-        public Kitchen _kitchen;
-        public Storage _storage;
+        private Kitchen _kitchen;
+        private Storage _storage;
     }
 }
