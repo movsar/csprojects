@@ -11,7 +11,7 @@ namespace CakesAdvanced.Models
         public string Name {  get; }
         public decimal Price { get; }
 
-        public List<string> _ingredients { get; } = new List<string>();
+        private List<string> _ingredients  = new List<string>();
 
         public Cake(string name, List<string> ingredients)
         {

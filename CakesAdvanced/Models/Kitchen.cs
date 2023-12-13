@@ -8,7 +8,7 @@ namespace CakesAdvanced.Models
 {
     internal class Kitchen
     {
-        private string _storage(Storage)
-        private string _workshop(Workshop)
+        private Storage _storage;
+        private Workshop _workshop;
     }
 }
