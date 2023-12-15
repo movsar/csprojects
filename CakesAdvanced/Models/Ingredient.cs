@@ -6,7 +6,7 @@ namespace CakesAdvanced.Models
     {
         public string Name { get; }
         public decimal Cost { get; }
-        public int Quantity { get; private set; }
+        public int Quantity { get;  set; }
 
     }
 }
