@@ -9,26 +9,28 @@ namespace CakesAdvanced.Models
 {
     internal class Storage
     {
-        const string ingredientsPATH = "ingredients.json";
+        const string INGREDIENTS_PATH = "ingredients.json";
         private List<Ingredient> _allingredients = new List<Ingredient>();
 
         public void SaveIngredients()
         {
             var serializedIngredients = JsonConvert.SerializeObject(_allingredients);
-            File.WriteAllText(ingredientsPATH, serializedIngredients);
+            File.WriteAllText(INGREDIENTS_PATH, serializedIngredients);
         }
         public void LoadIngredients()
         {
-            if (File.Exists(ingredientsPATH))
+            if (File.Exists(INGREDIENTS_PATH))
             {
-                var serializedIngredients = File.ReadAllText(ingredientsPATH);
-                var deserializedIngredients = JsonConvert.DeserializeObject<Storage>(serializedIngredients);
-                var deserializedInghredients = _allingredients;
+                var serializedIngredients = File.ReadAllText(INGREDIENTS_PATH);
+                var deserializedIngredients = JsonConvert.DeserializeObject<Ingredient>(serializedIngredients);
                 return;
             }
-            throw new Exception("Такого файла не существует!");
+            else
+            {
+                throw new Exception("Такого файла не существует!");
+            }
         }
-        public Storage (string ingredients)
+        public Storage ()
         {
             LoadIngredients();
         }
