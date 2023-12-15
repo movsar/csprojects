@@ -2,6 +2,7 @@
 {
     public class InputService
     {
+        // Ввод числа с плавающей запятой
         public static double? GetDouble()
         {
             // Создается пустая переменная для результата
@@ -49,6 +50,7 @@
             }
         }
 
+        // Ввод числа
         public static int? GetInt()
         {
             int result;
@@ -61,6 +63,7 @@
             return result;
         }
 
+        // Ввод даты
         public static DateTime? GetDate()
         {
             string? rawDate = Console.ReadLine();
@@ -71,6 +74,17 @@
                 Console.WriteLine("Ошибка ввода");
             }
             return date;
+        }
+
+        // Ввод текста (строки)
+        public static string? GetString()
+        {
+            string? rawString = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(rawString))
+            {
+                return null;
+            }
+            return rawString;
         }
     }
 }
