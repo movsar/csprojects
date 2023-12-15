@@ -21,7 +21,12 @@ namespace movsar_part4
             {
                 case 1:
                     Console.WriteLine("Введите название торта: ");
-                    string? selectedName = Console.ReadLine();
+                    string? selectedName = InputService.GetString();
+                    if (selectedName == null)
+                    {
+                        Console.WriteLine("Неверный ввод");
+                        return;
+                    }
 
                     string contents = File.ReadAllText(PATH);
                     string[] entries = contents.Split("\r\n");
@@ -51,10 +56,10 @@ namespace movsar_part4
                     Console.WriteLine("Введите данные о торте");
 
                     Console.Write("Название торта: ");
-                    string? date = Console.ReadLine();
+                    string? date = InputService.GetString();
 
                     Console.WriteLine("Цена торта: ");
-                    string? price = Console.ReadLine();
+                    string? price = InputService.GetString();
 
                     try
                     {
