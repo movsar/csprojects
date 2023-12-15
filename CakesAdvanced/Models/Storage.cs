@@ -22,7 +22,7 @@ namespace CakesAdvanced.Models
             if (File.Exists(INGREDIENTS_PATH))
             {
                 var serializedIngredients = File.ReadAllText(INGREDIENTS_PATH);
-                var deserializedIngredients = JsonConvert.DeserializeObject<Ingredient>(serializedIngredients);
+                _allingredients = JsonConvert.DeserializeObject<List<Ingredient>>(serializedIngredients);
                 return;
             }
             else
