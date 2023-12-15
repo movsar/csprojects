@@ -8,5 +8,14 @@ namespace CakesAdvanced.Models
 {
     internal class Cake
     {
+        public string Name { get; }
+        public decimal Price { get; }
+        public List<Ingredient> _ingredients { get; } = new List<Ingredient>();
+        public Cake(string name, decimal price, List<Ingredient> ingredients)
+        {
+            Name = name;
+            Price = price;
+            _ingredients = ingredients;
+        }
     }
 }
