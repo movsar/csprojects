@@ -8,5 +8,6 @@ namespace CakesAdvanced.Models
 {
     internal class Storage
     {
+        private List<Ingredient> _allingredients = new List<Ingredient>();
     }
 }
