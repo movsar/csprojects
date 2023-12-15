@@ -38,7 +38,7 @@ namespace CakesAdvanced.Models
         }
         public Ingredient? FindIngredientByName(string nameOfIngredient)
         {
-            return _allIngredients.Find(someWord => someWord.Name.ToLower() == nameOfIngredient.ToLower());
+            return _allIngredients.Find(i => i.Name.ToLower() == nameOfIngredient.ToLower());
         }
         public Ingredient GetIngredientByName(string nameOfIngredient)
         {
