@@ -79,7 +79,12 @@
         // Ввод текста (строки)
         public static string? GetString()
         {
-            return Console.ReadLine();
+            string? rawString = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(rawString))
+            {
+                return null;
+            }
+            return rawString;
         }
     }
 }
