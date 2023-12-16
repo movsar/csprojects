@@ -2,11 +2,20 @@
 {
     public static class InputService
     {
+        const string DateFormat = "DD.mm.YYYY";
+        public static DateTime? GetDate()
+        {
+            Console.WriteLine("Введите дату: ");
+            // DateTime date = Console.ReadLine();
+            return (null);
+
+
+        }
         public static double? GetDouble()
         {
             // Создается пустая переменная для результата
             double result;
-            
+
             // Берем ввод пользователя и сохраняем как строку в input
             string? input = Console.ReadLine();
 
