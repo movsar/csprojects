@@ -83,7 +83,7 @@ namespace CakesAdvanced.Models
                 }
             }
         }
-        public void TakeIngredients(Dictionary<string, int> neededIngredients, List<Ingredient> ingredients)
+        public List<Ingredient> TakeIngredients(Dictionary<string, int> neededIngredients)
         {
            VerifyIngredientsAvailability(neededIngredients);
             List<Ingredient> ingredientsToReturn = new List<Ingredient>();
@@ -104,10 +104,12 @@ namespace CakesAdvanced.Models
                         Quantity = gettingIngredient.Quantity,
                     };
                     ingredientsToReturn.Add(takenIngredient);
-                    SaveIngredients();
-                    return;
+                    
                 }
-            }            
+
+            }
+            SaveIngredients();
+            return ingredientsToReturn;
         }
     }
 }
