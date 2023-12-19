@@ -29,7 +29,7 @@ namespace CakesAdvanced.Models
                 {
                     _allIngredients= deserializedIngredients;
                 }
-                throw new Exception("Такого файла не существует!");
+                else { throw new Exception("Такого файла не существует!"); }
             }
         }
         public Storage()
@@ -63,6 +63,51 @@ namespace CakesAdvanced.Models
             {
                 AddIngredients(ingredient);
             }
+        }
+        public void VerifyIngredientsAvailability(Dictionary<string, int> neededIngredients)
+        {
+            
+            foreach(var i in neededIngredients)
+            {
+                string ingredientName= i.Key;
+                int neededQuantity= i.Value;
+                Ingredient foundedIngredient = FindIngredientByName(ingredientName);
+
+                if(foundedIngredient == null)
+                {
+                    throw new Exception("Ингредиент отсутствует на складке");
+                }
+                if(foundedIngredient.Quantity<neededQuantity)
+                {
+                    throw new Exception("недостаточное количество ингредиента на складе");
+                }
+            }
+        }
+        public void TakeIngredients(Dictionary<string, int> neededIngredients, List<Ingredient> ingredients)
+        {
+           VerifyIngredientsAvailability(neededIngredients);
+            List<Ingredient> ingredientsToReturn = new List<Ingredient>();
+            foreach (var i in neededIngredients)
+            {
+                string ingredientName= i.Key;
+                int neededQuantity= i.Value;
+                Ingredient gettingIngredient = GetIngredientByName(ingredientName);
+
+                if(gettingIngredient != null) 
+                {
+                    gettingIngredient.Quantity -= neededQuantity;
+
+                    Ingredient takenIngredient = new Ingredient
+                    {
+                        Name = gettingIngredient.Name,
+                        Cost = gettingIngredient.Cost,
+                        Quantity = gettingIngredient.Quantity,
+                    };
+                    ingredientsToReturn.Add(takenIngredient);
+                    SaveIngredients();
+                    return;
+                }
+            }            
         }
     }
 }
