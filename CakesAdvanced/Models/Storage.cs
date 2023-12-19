@@ -29,8 +29,8 @@ namespace CakesAdvanced.Models
                 {
                     _allIngredients= deserializedIngredients;
                 }
-                else { throw new Exception("Такого файла не существует!"); }
             }
+            else { throw new Exception("Такого файла не существует!"); }
         }
         public Storage()
         {
