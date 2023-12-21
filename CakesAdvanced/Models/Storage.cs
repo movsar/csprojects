@@ -71,13 +71,13 @@ namespace CakesAdvanced.Models
             {
                 string ingredientName= i.Key;
                 int neededQuantity= i.Value;
-                Ingredient foundedIngredient = FindIngredientByName(ingredientName);
+                Ingredient existingIngredient = FindIngredientByName(ingredientName);
 
-                if(foundedIngredient == null)
+                if(existingIngredient == null)
                 {
                     throw new Exception("Ингредиент отсутствует на складке");
                 }
-                if(foundedIngredient.Quantity<neededQuantity)
+                if(existingIngredient.Quantity<neededQuantity)
                 {
                     throw new Exception("недостаточное количество ингредиента на складе");
                 }
@@ -91,22 +91,17 @@ namespace CakesAdvanced.Models
             {
                 string ingredientName= i.Key;
                 int neededQuantity= i.Value;
-                Ingredient gettingIngredient = GetIngredientByName(ingredientName);
+                Ingredient existingIngredient = GetIngredientByName(ingredientName);
 
-                if(gettingIngredient != null) 
+                existingIngredient.Quantity -= neededQuantity;
+
+                Ingredient takenIngredient = new Ingredient
                 {
-                    gettingIngredient.Quantity -= neededQuantity;
-
-                    Ingredient takenIngredient = new Ingredient
-                    {
-                        Name = gettingIngredient.Name,
-                        Cost = gettingIngredient.Cost,
-                        Quantity = gettingIngredient.Quantity,
-                    };
-                    ingredientsToReturn.Add(takenIngredient);
-                    
-                }
-
+                    Name = existingIngredient.Name,
+                    Cost = existingIngredient.Cost,
+                    Quantity = neededQuantity,
+                };
+                ingredientsToReturn.Add(takenIngredient);
             }
             SaveIngredients();
             return ingredientsToReturn;
