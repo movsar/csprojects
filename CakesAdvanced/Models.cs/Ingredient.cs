@@ -6,7 +6,7 @@ public decimal Cost {get;}
 
 public int Quantity {get; set;}
 
-public Ingredients(string name)
+public Ingredient(string name)
 {
     Name = name;
     
