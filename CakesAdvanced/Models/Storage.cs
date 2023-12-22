@@ -55,12 +55,26 @@ namespace CakesAdvanced.Models
 
         public void AddIngredient(Ingredient ingredient)
         {
-
+            var existingIngredient = FindIngredientByName(ingredient.Name);
+            {
+                if (existingIngredient != null)
+                {
+                    existingIngredient.Quantity += ingredient.Quantity;
+                }
+                else
+                {
+                    _allingredients.Add(ingredient);
+                }
+                SaveIngredients();
+            }
         }
 
         public void AddIngredients(List<Ingredient> ingredients)
         {
-
+            foreach (var ingredient in ingredients)
+            {
+                AddIngredient(ingredient);
+            }
         }
     }
 }
