@@ -38,19 +38,20 @@ namespace CakesAdvanced.Models
 
         public Ingredient? FindIngredientByName(string Name)
         {
+            return _allingredients.FirstOrDefault(x => x.Name.ToLower() == Name.ToLower());
+        }
+
+        public Ingredient GetIngredientByName(string Name)
+        {
             try
             {
-                return _allingredients.Find(x => x.Name.ToLower() == Name.ToLower());
+                return _allingredients.First(x => x.Name.ToLower() == Name.ToLower());
             }
             catch
             {
                 throw new Exception("Ингредиент не найден");
             }
-        }
-
-        public Ingredient GetIngredientByName(string Name)
-        {
-            return _allingredients.First(x => x.Name.ToLower() == Name.ToLower());
+           
         }
 
         public void AddIngredient(Ingredient ingredient)
