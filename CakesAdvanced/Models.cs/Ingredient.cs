@@ -1,15 +1,8 @@
-internal class Ingredients
+internal class Ingredient
 {
-public string Name{get;}
+    internal string Name { get; set; }
 
-public decimal Cost {get;}
+    internal decimal Cost { get; set; }
 
-public int Quantity {get; set;}
-
-public Ingredient(string name)
-{
-    Name = name;
-    
-}
-
+    internal int Quantity { get; set; }
 }

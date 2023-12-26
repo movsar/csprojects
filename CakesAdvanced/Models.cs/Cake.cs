@@ -1,16 +1,16 @@
 internal class Cake
 {
-    public string Name { get; }
+    internal string Name { get; }
 
-    public decimal Price { get; private set; }
+    internal decimal Price { get; private set; }
 
-    public List<string> _ingredients = new List<string>();
+    internal List<string> _ingredients = new List<string>();
 
-    public Cake(string name, List<string> ingredients)
+    internal Cake(string name, List<string> ingredients)
     {
         Name = name;
-        _ingredients = ingredients;     
+        _ingredients = ingredients;
+
+         Price = _ingredients.Sum(i => (i.Cost * 0.5m) * i.Quantity); 
     }
-
-
 }
