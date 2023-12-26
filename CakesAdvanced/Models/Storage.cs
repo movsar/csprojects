@@ -38,19 +38,20 @@ namespace CakesAdvanced.Models
 
         public Ingredient? FindIngredientByName(string Name)
         {
+            return _allingredients.FirstOrDefault(x => x.Name.ToLower() == Name.ToLower());
+        }
+
+        public Ingredient GetIngredientByName(string Name)
+        {
             try
             {
-                return _allingredients.Find(x => x.Name.ToLower() == Name.ToLower());
+                return _allingredients.First(x => x.Name.ToLower() == Name.ToLower());
             }
             catch
             {
                 throw new Exception("Ингредиент не найден");
             }
-        }
 
-        public Ingredient GetIngredientByName(string Name)
-        {
-            return _allingredients.First(x => x.Name.ToLower() == Name.ToLower());
         }
 
         public void AddIngredient(Ingredient ingredient)
@@ -75,6 +76,41 @@ namespace CakesAdvanced.Models
             {
                 AddIngredient(ingredient);
             }
+        }
+
+        public void VerifyIngredientsAvailability(Dictionary<string, int> neededIngredients)
+        {
+            foreach (var ingredient in neededIngredients)
+            {
+                var checkIngredient = FindIngredientByName(ingredient.Key);
+                if (checkIngredient == null)
+                {
+                    throw new Exception("Не найден ингредиент");
+                }
+                else if (ingredient.Value < checkIngredient.Quantity)
+                {
+                    throw new Exception("Недостаточное количество ингредиентов");
+                }
+            }
+        }
+        public List<Ingredient> TakeIngredients(Dictionary<string, int> neededIngredients)
+        {
+            VerifyIngredientsAvailability(neededIngredients);
+            List<Ingredient> ingredientsToReturn = new List<Ingredient>();
+            foreach (var ingredient in neededIngredients)
+            {
+                Ingredient existingIngredient = GetIngredientByName(ingredient.Key);
+                existingIngredient.Quantity -= ingredient.Value;
+                Ingredient ingredient1 = new Ingredient()
+                {
+                    Name = existingIngredient.Name,
+                    Quantity = ingredient.Value,
+                    Cost = existingIngredient.Cost,
+                };
+                ingredientsToReturn.Add(ingredient1);
+            }
+            SaveIngredients();
+            return ingredientsToReturn;
         }
     }
 }
