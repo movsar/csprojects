@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 internal class Kitchen
 {
     private Storage _storage;
