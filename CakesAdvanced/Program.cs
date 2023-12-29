@@ -1,4 +1,5 @@
-﻿namespace CakesAdvanced;
+﻿
+namespace CakesAdvanced;
 
 class Program
 {

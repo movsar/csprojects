@@ -1,6 +1,6 @@
 internal class Cake
 {
-    internal string Name { get; }
+    internal string Name { get; set; }
     internal decimal Price { get; private set; }
 
     internal List<Ingredient> _ingredients = new List<Ingredient>();

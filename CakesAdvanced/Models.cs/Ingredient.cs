@@ -1,8 +1,13 @@
-internal class Ingredient
+public class Ingredient
 {
-    internal string Name { get; set; }
+    public string Name { get; set; }
 
-    internal decimal Cost { get; set; }
+    public decimal Cost { get; set; }
 
-    internal int Quantity { get; set; }
+    public int Quantity { get; set; }
+
+    public Ingredient()
+    {
+
+    }
 }
