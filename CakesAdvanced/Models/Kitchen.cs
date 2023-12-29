@@ -27,8 +27,8 @@ namespace CakesAdvanced.Models
             {
                 try
                 {
-                    _storage.VerifyIngredientsAvailability(recipe.value);
-                    availableRecipes.Add(recipe.Key, recipe.value);
+                    _storage.VerifyIngredientsAvailability(recipe.Value);
+                    availableRecipes.Add(recipe.Key, recipe.Value);
                 }
                 catch (Exception ex)
                 {
@@ -43,7 +43,7 @@ namespace CakesAdvanced.Models
             var recipe = availableRecipes.FirstOrDefault(r => r.Key.ToLower() == cakeName.ToLower());
             if(recipe.Key == null)
             {
-                throw new("Нет такого");
+                throw new Exception("Нет такого");
             }
             List<Ingredient> ingredients = _storage.TakeIngredients(recipe.Value);
             Cake newCake = new Cake(recipe.Key, ingredients);
