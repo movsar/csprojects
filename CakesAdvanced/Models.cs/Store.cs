@@ -10,6 +10,7 @@ public class Store
     {
         Name = name;
         _storage = new Storage();
+        _kitchen = new Kitchen(_storage);
 
     }
 
