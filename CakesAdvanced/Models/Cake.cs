@@ -16,6 +16,7 @@ namespace CakesAdvanced.Models
         {
             Name = name;
             _ingredients = ingredients;
+            Price = _ingredients.Sum(i => (i.Cost * 0.5m) * i.Quantity);
         }
     }
 }

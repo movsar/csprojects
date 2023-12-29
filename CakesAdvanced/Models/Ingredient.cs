@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CakesAdvanced.Models
 {
-    internal class Ingredient
+    public class Ingredient
     {
         public string Name { get; set; }
         public decimal Cost { get; set; }

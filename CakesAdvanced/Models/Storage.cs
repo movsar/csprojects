@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
 
 
 namespace CakesAdvanced.Models
@@ -12,7 +13,7 @@ namespace CakesAdvanced.Models
     internal class Storage
     {
         const string PATH = "ingredients.json";
-        private List<Ingredient> _allIngredients;
+        private List<Ingredient> _allIngredients = new List<Ingredient>();
 
         public void SaveIngredients()
         {
@@ -24,13 +25,9 @@ namespace CakesAdvanced.Models
             if(File.Exists(PATH))
             {
                 var serializedIngredients = File.ReadAllText(PATH);
-                var deserializedIngredients = JsonConvert.DeserializeObject<List<Ingredient>>(PATH);
-                if(deserializedIngredients != null)
-                {
-                    _allIngredients= deserializedIngredients;
-                }
-            }
-            else { throw new Exception("Такого файла не существует!"); }
+                _allIngredients = JsonConvert.DeserializeObject<List<Ingredient>>(serializedIngredients);
+                return;
+            } 
         }
         public Storage()
         {
