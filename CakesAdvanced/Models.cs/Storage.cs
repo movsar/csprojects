@@ -1,21 +1,21 @@
 using Newtonsoft.Json;
 
-internal class Storage
+public class Storage
 {
     const string INGREDIENTS_PATH = "ingredients.json";
 
     //Приватный список ингредиентов, где хранятся все ингредиенты на складе.
-    private List<Ingredient> _allingredients = new List<Ingredient>();
+    public List<Ingredient> _allingredients = new List<Ingredient>();
 
     //Сериализует текущий список ингредиентов и сохраняет его в файл.
-    internal void SaveIngredients()
+    public void SaveIngredients()
     {
         var serializedIngredients = JsonConvert.SerializeObject(_allingredients);
         File.WriteAllText(INGREDIENTS_PATH, serializedIngredients);
     }
 
     //Загружает ингредиенты из файла. Если файл существует, десериализует данные и обновляет список ингредиентов.
-    internal void LoadIngredients()
+    public void LoadIngredients()
     {
         if (File.Exists(INGREDIENTS_PATH))
         {
@@ -23,10 +23,8 @@ internal class Storage
             _allingredients = JsonConvert.DeserializeObject<List<Ingredient>>(serializedIngredients);
             return;
         }
-        else
-        {
-            throw new Exception("Такого файла не существует!");
-        }
+            Console.WriteLine("Такого файла не существует!");
+        
     }
     internal Storage()
     {
@@ -36,7 +34,7 @@ internal class Storage
     // Ищет ингредиент по названию. Возвращает найденный ингредиент или null, если таковой не найден.
     internal Ingredient? FindIngredientByName(string Name)
     {
-        return _allingredients.Find(x => x.Name.ToLower() == Name.ToLower());
+        return _allingredients.Find(x => x.Name?.ToLower() == Name?.ToLower());
     }
 
     //Возвращает ингредиент по названию. Вызывает ошибку, если ингредиент не найден.

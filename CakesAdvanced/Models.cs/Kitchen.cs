@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-internal class Kitchen
+public class Kitchen
 {
     private Storage _storage;
     private Workshop _workshop;
