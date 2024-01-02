@@ -6,7 +6,7 @@ namespace CakesAdvanced
     {
         static void Main(string[] args)
         {
-            var store = new Store ();
+            var store = new Store("Кондитерская");
             store.Open();
         }
     }
