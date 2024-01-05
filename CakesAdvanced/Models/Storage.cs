@@ -72,7 +72,7 @@ namespace CakesAdvanced.Models
 
                 if(existingIngredient == null)
                 {
-                    throw new Exception("Ингредиент отсутствует на складке");
+                    throw new Exception("Ингредиент отсутствует на складе");
                 }
                 if(existingIngredient.Quantity<neededQuantity)
                 {
@@ -102,6 +102,10 @@ namespace CakesAdvanced.Models
             }
             SaveIngredients();
             return ingredientsToReturn;
+        }
+        public List<Ingredient> GetAllIngredients()
+        {
+            return _allIngredients;
         }
     }
 }

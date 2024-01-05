@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CakesAdvanced.Models
 {
@@ -24,101 +25,169 @@ namespace CakesAdvanced.Models
         public void AddIngredients()
         {
              Console.WriteLine("Введите ингредиенты в формате 'Название:Цена:Количество");
-             string input = Console.ReadLine();
+             string? input = Console.ReadLine();
+             if (string.IsNullOrEmpty(input))
+             {
+                Console.WriteLine("Вы ничего не ввели");
+                Console.ReadKey();
+                Console.Clear();
+                Open();
+                return;
+            }
              string[] ingredientsSeparately = input.Split(',');
-            try
-            {
-                foreach (string x in ingredientsSeparately)
-                {
-                    string[] ingredientsDetails = x.Split(':');
-                    Ingredient ingredients = new Ingredient()
-                    {
-                        Name = ingredientsDetails[0],
-                        Cost = Convert.ToDecimal(ingredientsDetails[1]),
-                        Quantity = Convert.ToInt32(ingredientsDetails[2])
-                    };
-                    _storage.AddIngredients(ingredients);
-                }
-            }
-            catch (Exception)
-            {
-                _storage.LoadIngredients();
-            }
+             
+             foreach (string x in ingredientsSeparately)
+             {
+                 string[] ingredientsDetails = x.Split(':');
+                 if (ingredientsDetails.Length != 3)
+                 {
+                     Console.WriteLine("Введите в соответствии с примером");
+                     Console.ReadKey();
+                     Console.Clear();
+                     AddIngredients();
+                     continue;
+                 }
+                 Ingredient ingredients = new Ingredient()
+                 {
+                     Name = ingredientsDetails[0],
+                     Cost = Convert.ToDecimal(ingredientsDetails[1]),
+                     Quantity = Convert.ToInt32(ingredientsDetails[2])
+                 };
+                 _storage.AddIngredients(ingredients);
+             }
         }
 
         public void ShowManageOptions()
         {
-            string[] modes = { "1. Добавить ингредиенты" };
-            int? mode = InputService.GetOption(modes);
-
-            if(mode==1)
+            Dictionary<char, string> options = new Dictionary<char, string>
             {
-                AddIngredients();
-            }  
+                { '1', "Добавить ингредиенты" },
+                { '2', "Показать ингредиенты" },
+                
+            };
+            char selectedOption = InputService.GetOption("Выберите дествие", options);
+
+            switch(selectedOption)
+            {
+                case '1':
+                    AddIngredients();
+                    break;
+                case '2':
+                    ShowIngredients();
+                    break;
+                default:
+                    Open();
+                    return;
+            }
+            
+                
         } 
         public void ShowClientOption()
         {
-            string[] modes = { "1.Показать список возможных тортов", "2.Заказать торт" };
-            int? mode = InputService.GetOption(modes);
+            Dictionary<char, string> options = new Dictionary<char, string>{
+                { '1', "Показать список возможных тортов" },
+                { '2', "Заказать торт" }
+            };
+            char selectedOption = InputService.GetOption("Выберите дествие", options);
             Console.Clear();
 
-            if (mode == 1)
+            switch (selectedOption)
             {
-                ShowAvailableCakeOptions();
-            }
-            if(mode == 2)
-            {
-                TakeOrder();
+                case '1':
+                    ShowAvailableCakeOptions();
+                    break;
+                case '2':
+                    TakeOrder();
+                    break;
+                default:
+                    Open();
+                    return;
             }
         }
 
-        public void ShowAvailableCakeOptions()
+        public Dictionary<string, Dictionary<string, int>> ShowAvailableCakeOptions()
         {
-            var availableRecipes = _kitchen.GetAvailableRecipes();
-            if (availableRecipes==null)
+            var recipes = _kitchen.GetAvailableRecipes();
+            if (recipes.Keys.Count() == 0)
             {
                 Console.WriteLine("Доступных рецептов нет");
+                Console.ReadKey();
+                Console.Clear();
+                Open();
             }
-            else
+            else 
             {
-                Console.WriteLine($"Доступные рецепты: ", availableRecipes);
+                Console.WriteLine(string.Join(",", recipes.Keys));
             }
+                return recipes;
+            
         }
 
-        public void TakeOrder()
+        public Cake TakeOrder()
         {
             Console.WriteLine("Пожалуйста, напишите название нужного торта");
-            string input = Console.ReadLine();
-            if (input == null)
+            string? input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input))
             {
                 throw new Exception("Вы не ввели название");
             }
-            try
-            {
-                var newCake = _kitchen.MakeCake(input);
-                Console.WriteLine($"Ваш торт {newCake.Name} готов! Вот его цена: { newCake.Price}");
-            }
-            catch (Exception)
-            {
-                throw new Exception("Торт не удалось сделать");
-            }
+            
+            var newCake = _kitchen.MakeCake(input);
+            Console.WriteLine($"Ваш торт {newCake.Name} готов! Вот его цена: { newCake.Price}");
+            return newCake;
         }
 
         public void Open()
         {
-           
-            string[] modes = { "Менеджер", "Клиент" };
-            int? mode = InputService.GetOption(modes);
-            switch(mode)
+            try
             {
-                case 1:
-                    ShowManageOptions(); 
-                    break;
-                case 2:
-                    ShowClientOption();
-                    break;
+                Console.WriteLine("Здравствуйте!");
+                Dictionary<char, string> options = new Dictionary<char, string>{
+                { '1', "Менеджер" },
+                { '2', "Клиент" }
+            };
+                char selectedOption = InputService.GetOption("Выберите дествие", options);
+                switch (selectedOption)
+                {
+                    case '1':
+                        ShowManageOptions();
+                        break;
+                    case '2':
+                        ShowClientOption();
+                        break;
+                    default:
+                        Open();
+                        return;
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.ReadKey();
+                Console.Clear();
+                Open();
+            }
+            
+            
+        }
+        public void ShowIngredients()
+        {
+            var allIngredients=_storage.GetAllIngredients();
+            Console.WriteLine("Ингридиенты на складе:");
+            Console.WriteLine("Название |Цена     |Количество");
+            foreach (var ingredient in allIngredients)
+            {
+                Console.Write(ingredient.Name.PadRight(9));
+                Console.Write("|");
+                Console.Write($"{ ingredient.Cost}".PadRight(9));
+                Console.Write("|");
+                Console.Write(ingredient.Quantity);
+                Console.WriteLine();
+            }
+            Console.ReadKey();
+            Console.Clear();
             Open();
         }
+       
     }
 }

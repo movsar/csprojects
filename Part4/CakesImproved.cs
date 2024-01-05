@@ -10,13 +10,16 @@ namespace movsar_part4
             const string PATH = @"CakesPrice.txt";
 
             // Выбор режима
-            string[] modes = { "1 - Выбор торта", "2 - Внести в прайс новый торт" };
-            int? mode = InputService.GetOption(modes);
-            
+            Dictionary<char, string> options = new Dictionary<char, string>{
+                { '1', "Выбор торта" },
+                { '2', "Внести в прайс новый торт" }
+            };
+            char selectedOption = InputService.GetOption("Выберите дествие", options);
 
-            switch (mode)
+
+            switch (selectedOption)
             {
-                case 1:
+                case '1':
                     Console.WriteLine("Введите название торта: ");
                     string? selectedName = InputService.GetString();
                     if (selectedName == null)
@@ -49,7 +52,7 @@ namespace movsar_part4
                     Start();
                     break;
 
-                case 2:
+                case '2':
                     Console.WriteLine("Введите данные о торте");
 
                     Console.Write("Название торта: ");
@@ -88,6 +91,8 @@ namespace movsar_part4
                     Start();
 
                     break;
+
+                
             }
         }
     }
