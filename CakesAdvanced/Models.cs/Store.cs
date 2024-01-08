@@ -16,53 +16,79 @@ public class Store
 
     public void Open()
     {
-        string[] option = { "1 - Менеджер","2 - Клиент" };
-        int? mode = InputService.GetOption(option);
-        switch (mode)
+        try
         {
-            case 1:
-                ShowManagerOptions();
-                break;
+            Console.WriteLine("Добро пожаловать!");
+            Dictionary<char, string> options = new Dictionary<char, string>{
+                { '1', "Менеджер" },
+                { '2', "Клиент" }
+            };
+            char selectedOption = InputService.GetOption("Выберите дествие", options);
+            switch (selectedOption)
+            {
+                case '1':
+                    ShowManagerOptions();
+                    break;
 
-            case 2:
-                ShowClientOptions();
-                break;
+                case '2':
+                    ShowClientOptions();
+                    break;
+                default:
+                    Console.Clear();
+                    Open();
+                    return;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            Console.ReadKey();
+            Console.Clear();
+            Open();
         }
     }
 
     public void ShowClientOptions()
     {
-        string[] option = { "1. Показать список возможных тортов", "2. Заказать торт" };
-        int? mode = InputService.GetOption(option);
-        Console.Clear();
-        switch (mode)
+        Dictionary<char, string> options = new Dictionary<char, string>{
+                { '1', "Показать список возможных тортов" },
+                { '2', "Заказать торт" }
+            };
+        char selectedOption = InputService.GetOption("Выберите дествие", options);
+        switch (selectedOption)
         {
-            case 1:
-                // ShowAvailableCakeOptions();
+            case '1':
+                ShowAvailableCakeOptions();
                 break;
-            case 2:
-                //TakeOrder();
+            case '2':
+                TakeOrder();
                 break;
+            default:
+                Open();
+                return;
         }
-        Open();
-        Console.ReadKey();
-        Console.Clear();
-    }
 
+    }
 
     public void ShowManagerOptions()
     {
-        string[] option = { "1. Добавить ингредиенты" };
-        int? mode = InputService.GetOption(option);
-        switch (mode)
+        Dictionary<char, string> options = new Dictionary<char, string>{
+                { '1', "Добавить ингредиенты" },
+                { '2', "Показать список ингредиентов в наличии" }
+            };
+        char selectedOption = InputService.GetOption("Выберите дествие", options);
+        switch (selectedOption)
         {
-            case 1:
+            case '1':
                 AddIngredients();
                 break;
+            case '2':
+                ShowIngredients();
+                break;
+            default:
+                Open();
+                return;
         }
-        Open();
-        Console.ReadKey();
-        Console.Clear();
     }
 
     public void AddIngredients()
@@ -93,7 +119,7 @@ public class Store
     public Dictionary<string, Dictionary<string, int>> ShowAvailableCakeOptions()
     {
         Dictionary<string, Dictionary<string, int>> avaibleRecipes = _kitchen.GetAvailableRecipes();
-        if(avaibleRecipes == null)
+        if (avaibleRecipes == null)
         {
             Console.WriteLine("Нет доступных рецептов");
         }
@@ -101,25 +127,36 @@ public class Store
         return avaibleRecipes;
     }
 
-   public Cake TakeOrder()
+    public Cake TakeOrder()
     {
         Console.WriteLine("Напишите название торта который вы хотеть: ");
         string cake = Console.ReadLine();
-        if ( cake == null)
-        {
-            Console.WriteLine("Вы не ввели название торта!");
-        }
-        try 
-        {
+        if (String.IsNullOrEmpty(cake))
+            {
+                Console.WriteLine("Вы не ввели название");
+            }
             var newCake = _kitchen.MakeCake(cake);
             Console.WriteLine($"{newCake.Name} {newCake.Price}");
             return newCake;
-        }
-        catch (Exception)
+
+    }
+
+    public void ShowIngredients()
+    {
+        var ingredients = _storage.GetAllIngredients();
+        Console.WriteLine("Ингридиенты на складе");
+        Console.WriteLine("Название | Цена | Количество");
+        foreach (var ingredient in ingredients)
         {
-            throw new Exception("Хьун торт ца ез, хьай диети т1е хаъ!");
-        }
-        
+            Console.Write(ingredient.Name);
+            Console.Write("|  ");
+            Console.Write(ingredient.Cost);
+            Console.Write("|  ");
+            Console.Write(ingredient.Quantity);
+            }
+        Console.ReadKey();
+        Console.Clear();
+        Open();
     }
 
 }

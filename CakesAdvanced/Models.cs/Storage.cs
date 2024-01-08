@@ -115,4 +115,9 @@ public class Storage
         SaveIngredients();
         return ingredientsToReturn;
     }
+
+    public List<Ingredient> GetAllIngredients()
+        {
+            return _allingredients;
+        }
 }
