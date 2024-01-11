@@ -11,6 +11,7 @@ namespace CakesAdvanced.Models
     {
         private Storage _storage;
         private Workshop _workshop;
+        public event Action<Cake> CakeReady;
 
         public Kitchen(Storage storage)
         {
@@ -37,7 +38,7 @@ namespace CakesAdvanced.Models
             }
             return availableRecipes;
         }
-        public Cake MakeCake(string cakeName)
+        public async void MakeCake(string cakeName)
         {
             Dictionary<string, Dictionary<string, int>> availableRecipe = GetAvailableRecipes();
             var recipe=availableRecipe.FirstOrDefault(recipe => recipe.Key.ToLower() == cakeName.ToLower());
@@ -47,7 +48,8 @@ namespace CakesAdvanced.Models
             }
             List<Ingredient> ingredients = _storage.TakeIngredients(recipe.Value);
             Cake newCake=new Cake(recipe.Key, ingredients);
-            return newCake;
+            await Task.Delay(5000); CakeReady?.Invoke(newCake);
+
         }
     }
 }

@@ -20,6 +20,13 @@ namespace CakesAdvanced.Models
             Name = name;
             _storage = new Storage();
             _kitchen = new Kitchen(_storage);
+            _kitchen.CakeReady += OnCakeReady;
+            
+        }
+
+        private void OnCakeReady(Cake newCake)
+        {
+            Console.WriteLine($"Ваш торт {newCake.Name} готов! Вот его цена: {newCake.Price}");
         }
 
         public void AddIngredients()
@@ -123,7 +130,7 @@ namespace CakesAdvanced.Models
             
         }
 
-        public Cake TakeOrder()
+        public async void TakeOrder()
         {
             Console.WriteLine("Пожалуйста, напишите название нужного торта");
             string? input = Console.ReadLine();
@@ -131,10 +138,10 @@ namespace CakesAdvanced.Models
             {
                 throw new Exception("Вы не ввели название");
             }
+            Console.WriteLine("Заказ принят, ожидайте");
+            _kitchen.MakeCake(cakeName: input);
             
-            var newCake = _kitchen.MakeCake(input);
-            Console.WriteLine($"Ваш торт {newCake.Name} готов! Вот его цена: { newCake.Price}");
-            return newCake;
+           
         }
 
         public void Open()
