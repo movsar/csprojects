@@ -1,53 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CakesAdvanced.Models
+namespace CakesLibrary.Models
 {
-    internal class Kitchen
+    public class Kitchen
     {
-        private Storage _storage;
-        private Workshop _workshop;
+        public event Action<Cake> CakeReady;
 
+        readonly Storage _storage;
+        readonly Workshop _workshop;
         public Kitchen(Storage storage)
         {
             _storage = storage;
             _workshop = new Workshop();
         }
 
-        internal Dictionary<string, Dictionary<string, int>> GetAvailableRecipes()
+        public void MakeCake(string cakeName)
         {
-            Dictionary<string, Dictionary<string, int>> allRecipes = _workshop.GetAllRecipes();
-            Dictionary<string, Dictionary<string, int>> availableRecipes = new Dictionary<string, Dictionary<string, int>>();
+            var availableRecipes = GetAvailableRecipes();
+            var recipeForTheCake = availableRecipes.Keys.FirstOrDefault(recipeName => recipeName.ToLower() == cakeName);
+            if (recipeForTheCake == null)
+            {
+                throw new Exception("Нет рецепта для такого чуда :(");
+            }
 
-            foreach (var recipe in allRecipes)
+            var neededIngredients = availableRecipes.First(recipe => recipe.Key.ToLower() == cakeName.ToLower()).Value;
+
+            // Берем необходимые ингредиенты из Склада
+            var ingredients = _storage.TakeIngredients(neededIngredients);
+
+            // Готовим торт
+            Task.Delay(5000);
+            var cake = new Cake(cakeName, ingredients);
+            
+            CakeReady?.Invoke(cake);
+        }
+
+        public Dictionary<string, Dictionary<string, int>> GetAvailableRecipes()
+        {
+            var recipes = _workshop.GetAllRecipes();
+            var ingredientsToRecipe = new Dictionary<string, Dictionary<string, int>>();
+
+            foreach (var recipe in recipes)
             {
                 try
                 {
+                    Debug.WriteLine($"Проверяем можем ли мы приготовить: {recipe.Key}");
+
                     _storage.VerifyIngredientsAvailability(recipe.Value);
-                    availableRecipes.Add(recipe.Key, recipe.Value);
+                    ingredientsToRecipe.Add(recipe.Key, recipe.Value);
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                 }
             }
-            return availableRecipes;
-        }
-        internal Cake MakeCake(string cakeName)
-        {
-            Dictionary<string, Dictionary<string, int>> availableRecipes = GetAvailableRecipes();
-            var recipe = availableRecipes.FirstOrDefault(r => r.Key.ToLower() == cakeName.ToLower());
-            if(recipe.Key == null)
-            {
-                throw new Exception("Нет такого");
-            }
-            List<Ingredient> ingredients = _storage.TakeIngredients(recipe.Value);
-            Cake newCake = new Cake(recipe.Key, ingredients);
-            return newCake;
+
+            return ingredientsToRecipe;
         }
     }
 }

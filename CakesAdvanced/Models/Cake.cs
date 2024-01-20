@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CakesAdvanced.Models
+﻿namespace CakesLibrary.Models
 {
-    internal class Cake
+    public class Cake
     {
         public string Name { get; }
         public decimal Price { get; }
 
-        public List<Ingredient> _ingredients = new List<Ingredient>();
+        private readonly List<Ingredient> _ingredients;
+
         public Cake(string name, List<Ingredient> ingredients)
         {
             Name = name;
             _ingredients = ingredients;
-            Price = _ingredients.Sum(i => (i.Cost * 0.5m) * i.Quantity);
+
+            // наценка
+            decimal interest = 1.5m;
+
+            Price = _ingredients.Sum(i => i.Cost * interest);
         }
     }
 }

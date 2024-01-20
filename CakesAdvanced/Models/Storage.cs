@@ -1,115 +1,123 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace CakesAdvanced.Models
+namespace CakesLibrary.Models
 {
-    internal class Storage
+    public class Storage
     {
-        const string INGREDIENTS_PATH = "ingredients.json";
-        private List<Ingredient> _allingredients = new List<Ingredient>();
+        private List<Ingredient> _allIngredients = new List<Ingredient>();
 
-        public void SaveIngredients()
-        {
-            var serializationIngredients = JsonConvert.SerializeObject(_allingredients);
-            File.WriteAllText(INGREDIENTS_PATH, serializationIngredients);
-        }
-
-        public void LoadIngredients()
-        {
-            if (File.Exists(INGREDIENTS_PATH))
-            {
-                var serializationIngredients = File.ReadAllText(INGREDIENTS_PATH);
-                _allingredients = JsonConvert.DeserializeObject<List<Ingredient>>(serializationIngredients);
-                return;
-            }
-            else
-            {
-                throw new Exception("Файл не найден!");
-            }
-        }
         public Storage()
         {
             LoadIngredients();
         }
 
-        public Ingredient? FindIngredientByName(string Name)
-        {
-            return _allingredients.FirstOrDefault(x => x.Name.ToLower() == Name.ToLower());
-        }
-
-        public Ingredient GetIngredientByName(string Name)
-        {
-            try
-            {
-                return _allingredients.First(x => x.Name.ToLower() == Name.ToLower());
-            }
-            catch
-            {
-                throw new Exception("Ингредиент не найден");
-            }
-
-        }
-        public void AddIngredient(Ingredient ingredient)
-        {
-            var existingIngredient = FindIngredientByName(ingredient.Name);
-            if (existingIngredient != null)
-                {
-                    existingIngredient.Quantity += ingredient.Quantity;
-                }
-                else
-                {
-                    _allingredients.Add(ingredient);
-                }
-                SaveIngredients();
-        }
-
+        // Метод для добавления ингредиентов в склад
         public void AddIngredients(List<Ingredient> ingredients)
         {
-            foreach (var ingredient in ingredients)
+            foreach (var ingredientToAdd in ingredients)
             {
-                AddIngredient(ingredient);
+                AddIngredients(ingredientToAdd);
             }
         }
 
+        // Метод для добавления ингредиента в склад
+        public void AddIngredients(Ingredient ingredient)
+        {
+            Ingredient? existingIngredient = FindIngredientByName(ingredient.Name);
+            if (existingIngredient != null)
+            {
+                existingIngredient.Quantity += ingredient.Quantity;
+            }
+            else
+            {
+                _allIngredients.Add(ingredient);
+            }
+
+            SaveIngredients();
+        }
+
+        // Метод для взятия необходимых ингредиентов в нужном количестве
+        public List<Ingredient> TakeIngredients(Dictionary<string, int> neededIngredients)
+        {
+            // Проверяем есть ли нужные ингредиенты в нужном количестве
+            VerifyIngredientsAvailability(neededIngredients);
+
+            // Берём необходимое количество ингредиентов в виде копий объектов на складе
+            var ingredientsToReturn = new List<Ingredient>();
+            foreach (var neededIngredient in neededIngredients)
+            {
+                // Берем нужный ингредиент
+                Ingredient foundIngredient = GetIngredientByName(neededIngredient.Key)!;
+
+                // Обновляем количество ингредиента на складе
+                foundIngredient.Quantity -= neededIngredient.Value;
+
+                // Добавляем в новый список для того чтобы вернуть
+                var ingredientToReturn = new Ingredient(neededIngredient.Key, neededIngredient.Value, foundIngredient.Cost);
+                ingredientsToReturn.Add(ingredientToReturn);
+            }
+
+            // Cохраняет состояние склада,
+            SaveIngredients();
+
+            // Возвращаем нужные ингредиенты
+            return ingredientsToReturn;
+        }
+
+        // Метод для проверки доступности на Складе указанных ингредиентов и их количества
         public void VerifyIngredientsAvailability(Dictionary<string, int> neededIngredients)
         {
-            foreach (var ingredient in neededIngredients)
+            foreach (var neededIngredient in neededIngredients)
             {
-                Ingredient? existingIngredient = FindIngredientByName(ingredient.Key);
-                if (existingIngredient == null)
+                Ingredient? foundIngredient = FindIngredientByName(neededIngredient.Key);
+                if (foundIngredient == null)
                 {
-                    throw new Exception("Не найден ингредиент");
+                    throw new Exception($"Нет у нас такого ингредиента {neededIngredient.Key}");
                 }
-                else if (existingIngredient.Quantity < ingredient.Value)
+                else if (foundIngredient.Quantity < neededIngredient.Value)
                 {
-                    throw new Exception("Недостаточное количество ингредиентов");
+                    throw new Exception($"Недостаточное количество ингредиента {neededIngredient.Key}");
                 }
             }
         }
-        public List<Ingredient> TakeIngredients(Dictionary<string, int> neededIngredients)
+
+        // Метод для загрузки данных о текущих объектов на складе
+        public void LoadIngredients()
         {
-            VerifyIngredientsAvailability(neededIngredients);
-            List<Ingredient> ingredientsToReturn = new List<Ingredient>();
-            foreach (var i in neededIngredients)
+            if (File.Exists(Constants.PATH_INGREDIENTS))
             {
-                string ingredientName = i.Key;
-                int ingredientQuantity = i.Value;
-                Ingredient getIngredient = GetIngredientByName(ingredientName);
-                getIngredient.Quantity = getIngredient.Quantity - ingredientQuantity;
-                Ingredient newIngredient = new Ingredient
+                string serializedData = File.ReadAllText(Constants.PATH_INGREDIENTS);
+                List<Ingredient> loadedIngredients = JsonConvert.DeserializeObject<List<Ingredient>>(serializedData);
+
+                if (loadedIngredients != null)
                 {
-                    Name = getIngredient.Name,
-                    Quantity = ingredientQuantity,
-                    Cost = getIngredient.Cost,
-                };
-                ingredientsToReturn.Add(newIngredient);
+                    _allIngredients = loadedIngredients;
+                }
             }
-            SaveIngredients();
-            return ingredientsToReturn;
+        }
+
+        // Метод для сохранения данных о текущих объектов на складе
+        private void SaveIngredients()
+        {
+            string serializedIngredients = JsonConvert.SerializeObject(_allIngredients, Formatting.Indented);
+            File.WriteAllText(Constants.PATH_INGREDIENTS, serializedIngredients);
+        }
+
+        // Метод для поиска ингредиента, если не найдется вернет null
+        private Ingredient? FindIngredientByName(string name)
+        {
+            return _allIngredients.Find(i => i.Name.ToLower() == name.ToLower());
+        }
+
+        // Метод для взятия ингредиента, если такого элемента нет, выкинет ошибку
+        private Ingredient GetIngredientByName(string name)
+        {
+            return _allIngredients.First(i => i.Name.ToLower() == name.ToLower());
+        }
+        
+        public List<Ingredient> GetAllIngredients()
+        {
+            return _allIngredients;
         }
     }
 }
