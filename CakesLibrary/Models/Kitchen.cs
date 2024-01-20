@@ -15,10 +15,10 @@ namespace CakesLibrary.Models
             _workshop = new Workshop();
         }
 
-        public void MakeCake(string cakeName)
+        public async Task MakeCake(string cakeName)
         {
             var availableRecipes = GetAvailableRecipes();
-            var recipeForTheCake = availableRecipes.Keys.FirstOrDefault(recipeName => recipeName.ToLower() == cakeName);
+            var recipeForTheCake = availableRecipes.Keys.FirstOrDefault(recipeName => recipeName.ToLower() == cakeName.ToLower());
             if (recipeForTheCake == null)
             {
                 throw new Exception("Нет рецепта для такого чуда :(");
@@ -30,9 +30,9 @@ namespace CakesLibrary.Models
             var ingredients = _storage.TakeIngredients(neededIngredients);
 
             // Готовим торт
-            Task.Delay(5000);
+            await Task.Delay(10000);
             var cake = new Cake(cakeName, ingredients);
-            
+
             CakeReady?.Invoke(cake);
         }
 

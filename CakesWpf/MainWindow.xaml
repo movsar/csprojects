@@ -9,9 +9,29 @@
         Title="Кондитерская" Height="450" Width="800">
     <Grid>
         <TabControl>
+
             <TabItem Header="Client" x:Name="tabClient">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0" ItemsSource="{Binding Recipes}" x:Name="lstRecipes">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Рецепт" DisplayMemberBinding="{Binding .}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+                        <Label Content="Название торта:"/>
+                        <TextBox x:Name="txtCakeName" Width="120" Padding="3"/>
+                        <Button Content="Заказать торт" Padding="10 0 10 0" Margin="10 0 0 0" x:Name="btnTakeOrder"
+                                Click="btnTakeOrder_Click"/>
+                    </StackPanel>
+                </Grid>
             </TabItem>
+
             <TabItem Header="Manager" x:Name="tabManager">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
