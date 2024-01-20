@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CakesWpf"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainWindow, IsDesignTimeCreatable=True}"
         Title="Кондитерская" Height="450" Width="800">
     <Grid>
         <TabControl>
@@ -12,7 +13,16 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="Manager" x:Name="tabManager">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <ListView ItemsSource="{Binding Ingredients}" x:Name="lstIngredients">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Quantity" DisplayMemberBinding="{Binding Quantity}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
             </TabItem>
         </TabControl>
 
