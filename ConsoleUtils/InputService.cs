@@ -1,4 +1,6 @@
-﻿namespace ConsoleUtils
+﻿using System.Text;
+
+namespace ConsoleUtils
 {
     public static class InputService
     {
@@ -6,7 +8,7 @@
         {
             // Создается пустая переменная для результата
             double result;
-            
+
             // Берем ввод пользователя и сохраняем как строку в input
             string? input = Console.ReadLine();
 
@@ -19,24 +21,27 @@
             return result;
         }
 
-        public static int? SelectMode(string[] modeDescriptions)
+        public static char GetOption(string message, Dictionary<char, string> options)
         {
-            Console.WriteLine("Выберите режим: ");
 
-            foreach (var modeDescription in modeDescriptions)
+            Console.WriteLine(message);
+
+            foreach (var option in options)
             {
-                Console.WriteLine(modeDescription);
+                Console.WriteLine($"{option.Key} {option.Value}");
             }
 
             try
             {
-                // Пытаемся получить числовое значение
-                int? mode = Convert.ToInt32(Console.ReadLine());
+                ConsoleKeyInfo input = Console.ReadKey(true);
+                Console.Clear();
 
-                if (mode < 0 || mode > modeDescriptions.Length)
+                // Пытаемся получить числовое значение
+                char mode = input.KeyChar;
+                if (!options.ContainsKey(mode) && mode != '\r')
                 {
                     // Если ошибка, запускаем текущий метод, заново
-                    return SelectMode(modeDescriptions);
+                    return GetOption(message, options);
                 }
 
                 // Если код дошел сюда, возвращаем значение выбранного режима
@@ -45,8 +50,15 @@
             catch (Exception)
             {
                 // Если ошибка, запускаем текущий метод, заново
-                return SelectMode(modeDescriptions);
+                return GetOption(message, options);
             }
+        }
+
+        public static string? GetString()
+        {
+            var input = Console.ReadLine();
+            Console.InputEncoding = Encoding.UTF8;
+            return string.IsNullOrWhiteSpace(input) ? null : input;
         }
     }
 }
