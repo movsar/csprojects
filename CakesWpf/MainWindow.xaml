@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CakesWpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Кондитерская" Height="450" Width="800">
     <Grid>
+        <TabControl>
+            <TabItem Header="Client" x:Name="tabClient">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Manager" x:Name="tabManager">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
