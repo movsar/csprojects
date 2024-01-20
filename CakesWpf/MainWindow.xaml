@@ -14,7 +14,11 @@
             </TabItem>
             <TabItem Header="Manager" x:Name="tabManager">
                 <Grid Background="#FFE5E5E5">
-                    <ListView ItemsSource="{Binding Ingredients}" x:Name="lstIngredients">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="0" ItemsSource="{Binding Ingredients}" x:Name="lstIngredients">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
@@ -22,6 +26,18 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+                        <Label Content="Название:"/>
+                        <TextBox x:Name="txtName" Width="100" Padding="3"/>
+
+                        <Label Content="Стоимость:"/>
+                        <TextBox x:Name="txtCost" Width="30" Padding="3"/>
+
+                        <Label Content="Количество:"/>
+                        <TextBox x:Name="txtQuantity" Width="30" Padding="3"/>
+
+                        <Button Content="Добавить" Padding="10 0 10 0" Margin="10 0 0 0"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>
