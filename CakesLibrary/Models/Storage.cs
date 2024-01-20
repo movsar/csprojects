@@ -117,6 +117,7 @@ namespace CakesLibrary.Models
         
         public List<Ingredient> GetAllIngredients()
         {
+            LoadIngredients();
             return _allIngredients;
         }
     }

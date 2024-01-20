@@ -26,12 +26,28 @@ namespace CakesWpf
             //связываем код этого файла с кодом xaml
             DataContext = this;
 
+            RefreshIngredients();
+        }
+
+        private void RefreshIngredients()
+        {
             //берем раннее сохраненные ингредиенты и загружаем в свойство Ingredients
+            Ingredients.Clear();
             var availableIngredients = _storage.GetAllIngredients();
             foreach (Ingredient ingredient in availableIngredients)
             {
                 Ingredients.Add(ingredient);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string ingredientName = txtName.Text;
+            decimal ingredientCost = decimal.Parse(txtCost.Text);
+            int ingredientQuantity = int.Parse(txtQuantity.Text);
+            Ingredient ingredient = new Ingredient(ingredientName, ingredientQuantity, ingredientCost);
+            _storage.AddIngredients(ingredient);
+            RefreshIngredients();
         }
     }
 }
