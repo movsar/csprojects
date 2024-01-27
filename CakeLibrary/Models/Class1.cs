@@ -1,7 +1,7 @@
-﻿namespace CakeLibrary
+﻿namespace CakesLibrary
 {
     public class Class1
     {
-
     }
 }
+

@@ -1,11 +1,10 @@
-using Newtonsoft.Json;
-
 public class Storage
 {
     const string INGREDIENTS_PATH = "ingredients.json";
 
     //Приватный список ингредиентов, где хранятся все ингредиенты на складе.
     public List<Ingredient> _allingredients = new List<Ingredient>();
+    private object JsonConvert;
 
     //Сериализует текущий список ингредиентов и сохраняет его в файл.
     public void SaveIngredients()
