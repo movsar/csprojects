@@ -1,4 +1,4 @@
-namespace CakesLibrary.Models
+﻿namespace CakesLibrary.Models
 {
     public class Ingredient
     {

@@ -1,4 +1,4 @@
-
+﻿
 using System.Diagnostics;
 
 namespace CakesLibrary.Models
@@ -32,7 +32,7 @@ namespace CakesLibrary.Models
             // Готовим торт
             Task.Delay(5000);
             var cake = new Cake(cakeName, ingredients);
-
+            
             CakeReady?.Invoke(cake);
         }
 

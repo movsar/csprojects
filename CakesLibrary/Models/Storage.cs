@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace CakesLibrary.Models
 {
@@ -114,7 +114,7 @@ namespace CakesLibrary.Models
         {
             return _allIngredients.First(i => i.Name.ToLower() == name.ToLower());
         }
-
+        
         public List<Ingredient> GetAllIngredients()
         {
             return _allIngredients;

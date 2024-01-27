@@ -1,4 +1,4 @@
-namespace CakesLibrary.Models
+﻿namespace CakesLibrary.Models
 {
     public class Workshop
     {
@@ -21,7 +21,7 @@ namespace CakesLibrary.Models
                 ["Сахар"] = 2,
             });
 
-
+            
         }
 
         public Dictionary<string, Dictionary<string, int>> GetAllRecipes()

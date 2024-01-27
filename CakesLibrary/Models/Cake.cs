@@ -1,4 +1,4 @@
-namespace CakesLibrary.Models
+ï»¿namespace CakesLibrary.Models
 {
     public class Cake
     {
@@ -12,7 +12,7 @@ namespace CakesLibrary.Models
             Name = name;
             _ingredients = ingredients;
 
-            // íàöåíêà
+            // Ğ½Ğ°Ñ†ĞµĞ½ĞºĞ°
             decimal interest = 1.5m;
 
             Price = _ingredients.Sum(i => i.Cost * interest);
