@@ -25,8 +25,15 @@ namespace CakesWpf
 
             _storage = new Storage();
             _kitchen = new Kitchen(_storage);
+            _kitchen.CakeReady += _kitchen_CakeReady;
 
             UpdateIngredientsView();
+            UpdateRecipesView();
+        }
+
+        private void _kitchen_CakeReady(Cake newCake)
+        {
+            MessageBox.Show($"Ura {newCake.Name} готов, он стоит {newCake.Price} рублей");
             UpdateRecipesView();
         }
 
@@ -64,10 +71,7 @@ namespace CakesWpf
                 _selectedCakeName = "";
             }
         }
-        private void tabClient_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //UpdateRecipesView();
-        }
+
         private void UpdateRecipesView()
         {
             Recipes.Clear();
@@ -86,11 +90,6 @@ namespace CakesWpf
             {
                 Ingredients.Add((Ingredient)ingredient);
             }
-        }
-
-        private void tabManager_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //  UpdateIngredientsView();
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

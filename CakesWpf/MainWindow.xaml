@@ -9,13 +9,13 @@
         Title="Кондитерская" Height="450" Width="800">
     <Grid x:Name="Кондитерская">
         <TabControl>
-            <TabItem x:Name="tabClient" Header="Клиент" GotFocus="tabClient_GotFocus">
+            <TabItem x:Name="tabClient" Header="Клиент">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <ListView x:Name="lstRecipes" ItemsSource="{Binding Recipes}" SelectionMode="Single" SelectionChanged="ListView_SelectionChanged">
+                    <ListView x:Name="lstRecipes" ItemsSource="{Binding Recipes}" SelectionMode="Single" SelectionChanged="ListView_SelectionChanged ">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Список доступных тортов" DisplayMemberBinding="{Binding}"/>
@@ -25,7 +25,7 @@
                     <Button x:Name="btnTakeOrder" Content="Заказать торт" HorizontalAlignment="Left" Margin="578,357,0,0" VerticalAlignment="Top" Width="175" Click="btnTakeOrder_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabManager" Header="Менеджер" GotFocus="tabManager_GotFocus">
+            <TabItem x:Name="tabManager" Header="Менеджер">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
